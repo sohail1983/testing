@@ -2,7 +2,7 @@
 
 Usage:  python3 tools/build_assets.py <original-photo.jpg> <original-logo.jpg>
 Needs:  pip install pillow segno
-Outputs (in the card folder): photo.jpg, logo.png, apple-touch-icon.png,
+Outputs (in the card folder): photo.jpg, cover.jpg, logo.png, apple-touch-icon.png,
 favicon.png, site-qr.svg, Shafiqud_Doulah.vcf
 """
 import base64, io, sys
@@ -26,6 +26,11 @@ photo_src, logo_src = Path(sys.argv[1]), Path(sys.argv[2])
 img = ImageOps.exif_transpose(Image.open(photo_src)).convert("RGB")
 img = ImageOps.fit(img, (480, 480), Image.LANCZOS, centering=(0.5, 0.42))
 img.save(OUT / "photo.jpg", "JPEG", quality=82, optimize=True, progressive=True)
+
+# 1b. Cover photo for the hero (portrait 9:10, ~60 KB)
+full = ImageOps.exif_transpose(Image.open(photo_src)).convert("RGB")
+cover = ImageOps.fit(full, (900, 1000), Image.LANCZOS, centering=(0.5, 0.35))
+cover.save(OUT / "cover.jpg", "JPEG", quality=76, optimize=True, progressive=True)
 
 # 2. Logo + icons
 logo = Image.open(logo_src).convert("RGB")

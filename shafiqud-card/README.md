@@ -19,22 +19,26 @@ Upload the contents of this folder (except `tools/` and this README) to the web 
 | 10 | vCard: no photo, no WhatsApp, address abbreviated ("BL A, Sec 12") | The saved contact looks incomplete. |
 | 11 | Unused CSS (`.qr`), empty decorative header/footer bars, logo and firm name repeated | Minor clean-up. |
 
-## What the new version does
+## What the new version does (v2: modern, connect-first)
 
-- **Four one-tap buttons:** Call · WhatsApp · WeChat · Email.
-  - WhatsApp opens a chat via `wa.me` with a polite greeting already filled in.
-  - WeChat opens a panel with the WeChat QR code, the number, **Copy number** and **Open WeChat** buttons. A web link can't add a WeChat contact directly; this is the standard workaround.
-  - Email opens with the subject "Enquiry via business card".
-- **Save to Contacts** downloads an improved vCard (`Shafiqud_Doulah.vcf`) with the **photo embedded** plus mobile, WeChat line, email, website, LinkedIn, WhatsApp and the full address.
-- **Every contact row is tappable.** The address opens Google Maps.
-- **Share this card:** a self-hosted QR (`site-qr.svg`) so someone can scan it from your screen, and a **Share link** button that uses the phone's native share sheet.
-- **Fast:** photo cut from 1.18 MB to about 18 KB. No external fonts, scripts or APIs, so it also loads inside China and inside the WeChat browser.
-- **Link previews** (Open Graph) with photo and title, plus favicon and home-screen icon.
-- Accessible: alt text, `lang`, visible focus outlines, honours reduced motion. WeChat label also shown as 微信.
+The design follows patterns from leading digital-card products (Blinq, Popl, HiHello) and their "what converts" guidance. Key points: put connecting at the top, keep one clear main button, let visitors send their details back, keep text tappable, and require no app.
+
+- **Full-bleed photo hero** with the firm logo, name and role. Below it, a **Connect panel**: WhatsApp · WeChat · Call · Email.
+- **Save contact** is the main button. It downloads a vCard with the photo, WhatsApp, WeChat and full address.
+- **Send my details (contact exchange):** the visitor fills in name, company, phone and email. The details reach Mr. Doulah via **WhatsApp**, **email** or **WeChat** (copied and pasted). No server, no data stored.
+- **Sticky dock:** after scrolling, a bar stays at the bottom with *Save contact + WhatsApp + WeChat*.
+- **English / 中文 switch.** It switches to Chinese automatically for Chinese phones and inside WeChat, and remembers the choice.
+- **WeChat panel** with QR code, number, *Copy* and *Open WeChat*. The number is copied first so it can be pasted into *Add Contacts*.
+- **Copy buttons** next to phone, WhatsApp, WeChat, email and address.
+- **Office card** with *Directions* (Google Maps), *Copy address* and the **live local time in Dhaka**, so international contacts know whether it's a good time to call.
+- **Share sheet:** a self-hosted QR to show on your screen, plus *Copy link* and the phone's native *Share*.
+- **Dark mode** follows the phone's setting.
+- **Fast and works in China:** no external fonts, scripts or APIs. Photo 18 KB, cover 60 KB.
+- Link previews (Open Graph), favicon and home-screen icon. Alt text, keyboard focus and reduced-motion support.
 
 ## ⚠️ Two things to confirm or provide
 
-1. **WhatsApp number.** I used the main mobile, **+880 1755 559884**. If WhatsApp is on a different number, change `wa.me/8801755559884` (2 places) and the visible number in `index.html`, and `WHATSAPP` in `tools/build_assets.py`.
+1. **WhatsApp number.** I used the main mobile, **+880 1755 559884**. If WhatsApp is on a different number, replace `8801755559884` / `+880 1755 559884` everywhere in `index.html` (including `C.wa` in the script), and `WHATSAPP` in `tools/build_assets.py`.
 2. **WeChat QR image.** In WeChat go to *Me → tap your name → My QR Code → ⋯ → Save Image*. Crop it to a square, name it **`wechat-qr.png`** and upload it next to `index.html`. Until then the WeChat panel just shows the number with copy and open buttons. The QR block hides itself automatically.
 
 ## Files
@@ -42,7 +46,8 @@ Upload the contents of this folder (except `tools/` and this README) to the web 
 | File | Purpose |
 |------|---------|
 | `index.html` | The card (single file, no dependencies) |
-| `photo.jpg` | Optimised portrait, 480×480 |
+| `photo.jpg` | Optimised portrait, 480×480 (link previews, vCard) |
+| `cover.jpg` | Hero cover photo, 900×1000 |
 | `logo.png`, `favicon.png`, `apple-touch-icon.png` | Logo and icons |
 | `site-qr.svg` | QR code → https://shafiqud.doulah.com |
 | `Shafiqud_Doulah.vcf` | Contact file with embedded photo |
